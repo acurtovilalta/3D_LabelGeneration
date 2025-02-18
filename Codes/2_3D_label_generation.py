@@ -1,4 +1,5 @@
 import yaml
+import os
 import numpy as np
 import torch
 from pathlib import Path
@@ -126,6 +127,7 @@ for i in range(num):
     generated_labels.append(np.array(pred_labels))
     
 # Save
+os.makedirs("../Generated_Labels/", exist_ok=True)
 for i in range(len(segmentations)):
     np.savez(f'../Generated_Labels/label_generated_case{i}.npz', Unsupervised_seg=segmentations[i], AI_Label=generated_labels[i])
 print('AI assisted labels saved in Generated_Labels/.')

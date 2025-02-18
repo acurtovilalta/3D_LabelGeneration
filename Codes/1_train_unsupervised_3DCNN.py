@@ -1,4 +1,5 @@
 import yaml
+import os
 import numpy as np
 import torch
 import torch.optim as optim
@@ -82,6 +83,8 @@ nConv = config["nConv"]
 nChannel = config["nChannel"]
 model = Unsupervised_Segmentation_Model(input_channels, nConv=nConv, nChannel=nChannel)
 model.to(device)
+
+os.makedirs("../Pretrained_3DCNN/", exist_ok=True)
 
 ###### TRAINING #####
 lr = config["lr"]
