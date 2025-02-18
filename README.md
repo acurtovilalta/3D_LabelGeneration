@@ -5,7 +5,7 @@ Anna Curto-Vilalta, Benjamin Schlossmacher, Christina Valle, Alexandra Gersing, 
 
 ### Overview  
 This framework generates AI-assisted labels as segmentation annotations for supervised segmentation tasks. It is the official implementation of the paper:  
-**"Semi-Supervised Label Generation for 3D Multi-Modal MRI Bone Tumor Segmentation"**  
+*Semi-Supervised Label Generation for 3D Multi-Modal MRI Bone Tumor Segmentation*  
 
 The framework is adaptable to any volumetric dataset, with the only requirement being the presence of two image modalities.  
 
