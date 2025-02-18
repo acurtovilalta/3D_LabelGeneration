@@ -1,0 +1,21 @@
+device: 1
+
+# Dataset
+path_to_excel: "/home/annac/Documents/3D Bone Tumor Segmentation/Tables/modality_data_split801010.xlsx"
+modality_1: "T1_FS_KM"
+modality_2: "T2"
+
+# Data Processing
+h: 96 #500
+w: 96 #500
+depth: 10 #20
+
+# Optimization
+batch_size: 4
+num_workers: 4
+input_channels: 1
+nConv: 2
+nChannel: 30
+lr: 0.001
+num_epochs: 1000
+patience: 10
