@@ -4,6 +4,8 @@ import torch.nn.functional as F
 import torch.nn.init
 import numpy as np
 
+# 3DCNN adapted from https://github.com/kanezaki/pytorch-unsupervised-segmentation/tree/master
+# Loss adapted from https://github.com/kanezaki/pytorch-unsupervised-segmentation-tip/tree/master
 
 class Unsupervised_Segmentation_Model(nn.Module):
     def __init__(self, input_dim, nChannel, nConv):

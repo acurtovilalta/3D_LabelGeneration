@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import cv2
+import random
 
 def region_growing(img, seed):
     # Initialize the mask with all ones (background)
@@ -33,6 +34,7 @@ def region_growing(img, seed):
                     region_pixels.append(neighbor)
 
     return mask
+
 def get_neighbors(pixel, shape):
     neighbors = []
     row, col = pixel
@@ -47,7 +49,7 @@ def get_neighbors(pixel, shape):
     return neighbors
 
 def pred_to_segment_3ch(subject, nChannel, label_colours, slices):
-    w = 500
+    w = subject.shape[1]
     volume = torch.empty((slices, w, w, 3), dtype=torch.long)
     for s in range(slices):
         output = subject[:, :, :, s]
@@ -114,15 +116,10 @@ def prediction_mask_computation(sbj, mask, min_thresh, max_thresh):
                     gray_prediction2 = cv2.cvtColor(sbj_8u, cv2.COLOR_BGR2GRAY)
                     coord_mask = region_growing(gray_prediction2, coordinates[coord])
                     mask_tumor_area = np.sum(coord_mask == 1)
-                    #print(f'cluster area {coord}: {mask_tumor_area}')
                     if mask_tumor_area > max_thresh*tumor_area:
                         coord_mask = np.zeros_like(gray_prediction, dtype=np.uint8)
-                        #print('discarded')
                     list_masks.append(coord_mask)
-                #print(f'len list_masks: {len(list_masks)}')
                 pre_mask = np.sum(np.array(list_masks), axis=0)
-
-
 
             resulting_masks.append(pre_mask)
 

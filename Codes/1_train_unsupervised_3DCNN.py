@@ -1,6 +1,5 @@
 import yaml
 import numpy as np
-import matplotlib.pyplot as plt
 import torch
 import torch.optim as optim
 import torch.nn.init
@@ -8,11 +7,9 @@ from pathlib import Path
 import torchio as tio
 import pandas as pd
 from models.CNN_3D import Unsupervised_Segmentation_Model, myloss3D_opt
-from utils.data_utils import volume_processing, process_subjects
+from utils.data_utils import process_subjects
 import warnings
 warnings.simplefilter("ignore")
-
-# Code adapted from https://github.com/kanezaki/pytorch-unsupervised-segmentation/tree/master
 
 # Load configuration
 with open("../config.yaml", "r") as file:
@@ -27,7 +24,15 @@ df = pd.read_excel(config["path_to_excel"])
 
 h, w, depth = config["h"], config["w"], config["depth"]
 
-# T2 STIR
+# Modality 1
+train_list_T1 = df.loc[((df["data_split"] == "TRAIN") & (df["modality"] == config["modality_1"]))]
+train_list_T1 = train_list_T1["FILE"]
+val_list_T1 = df.loc[((df["data_split"] == "VAL") & (df["modality"] == config["modality_1"]))]
+val_list_T1 = val_list_T1["FILE"]
+train_paths_T1 = [Path(i) for i in train_list_T1]
+val_paths_T1 = [Path(i) for i in val_list_T1]
+
+# Modality 2
 train_list_T2 = df.loc[((df["data_split"] == "TRAIN") & (df["modality"] == config["modality_2"]))]
 train_list_T2 = train_list_T2["FILE"]
 val_list_T2 = df.loc[((df["data_split"] == "VAL") & (df["modality"] == config["modality_2"]))]
@@ -35,13 +40,6 @@ val_list_T2 = val_list_T2["FILE"]
 train_paths_T2 = [Path(i) for i in train_list_T2]
 val_paths_T2 = [Path(i) for i in val_list_T2]
 
-# T1 TSE
-train_list_T1 = df.loc[((df["data_split"] == "TRAIN") & (df["modality"] == config["modality_1"]))]
-train_list_T1 = train_list_T1["FILE"]
-val_list_T1 = df.loc[((df["data_split"] == "VAL") & (df["modality"] == config["modality_1"]))]
-val_list_T1 = val_list_T1["FILE"]
-train_paths_T1 = [Path(i) for i in train_list_T1]
-val_paths_T1 = [Path(i) for i in val_list_T1]
 
 train_sbj_T2 = process_subjects(train_paths_T2, h, w, depth)
 val_sbj_T2 = process_subjects(val_paths_T2, h, w, depth)
@@ -152,19 +150,19 @@ for epoch in range(num_epochs):
         best_val_loss = np.mean(epoch_val_loss)
         epochs_since_improvement = 0
         converge = epoch
-        torch.save(model.state_dict(), 'best_model.pt')
+        torch.save(model.state_dict(), '../Pretrained_3DCNN/best_model.pt')
     else:
         epochs_since_improvement += 1
 
     # Check if training should be stopped
     if epochs_since_improvement >= patience:
         print('Training stopped because validation loss did not improve for {} epochs.'.format(patience))
-        np.save('mean_train_loss.npy', mean_train_loss)
-        np.save('mean_val_loss.npy', mean_val_loss)
+        np.save('../Pretrained_3DCNN/train_losses.npy', mean_train_loss)
+        np.save('../Pretrained_3DCNN/val_losses.npy', mean_val_loss)
         break
 
     if epoch == (num_epochs-1):
         print("Reached max num of epochs.")
-        np.save('mean_train_loss.npy', mean_train_loss)
-        np.save('mean_val_loss.npy', mean_val_loss)
+        np.save('../Pretrained_3DCNN/train_losses.npy', mean_train_loss)
+        np.save('../Pretrained_3DCNN/val_losses.npy', mean_val_loss)
         break
