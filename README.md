@@ -5,14 +5,14 @@ Anna Curto-Vilalta, Benjamin Schlossmacher, Christina Valle, Alexandra Gersing, 
 
 ### Overview  
 This framework generates AI-assisted labels as segmentation annotations for supervised segmentation tasks. It is the official implementation of the paper:  
-**"Semi-Supervised Label Generation for 3D Multi-Modal MRI Bone Tumor Segmentation."**  
+**"Semi-Supervised Label Generation for 3D Multi-Modal MRI Bone Tumor Segmentation"**  
 
 The framework is adaptable to any volumetric dataset, with the only requirement being the presence of two image modalities.  
 
 ### Installation  
 1. Clone the Git repository:  
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/acurtovilalta/3D_LabelGeneration.git
    ```
 2. Create a Conda environment:  
    ```bash
@@ -28,9 +28,9 @@ The framework is adaptable to any volumetric dataset, with the only requirement 
 You need an Excel file containing three columns that list all data samples for the two MRI modalities alongside their annotation labels.  
 
 ##### Required Columns:
-- **`FILE`**: Path to the `.nii.gz` file.  
-- **`modality`**: MRI modality (e.g., `T1`, `T2`, `T1_label`, `T2_label`).  
-- **`data_split`**: Data split category (`TRAIN`, `VAL`, `TEST`).  
+- `FILE`: Path to the `.nii.gz` file.  
+- `modality`: MRI modality (e.g., `T1`, `T2`, `T1_label`, `T2_label`).  
+- `data_split`: Data split category (`TRAIN`, `VAL`, `TEST`).  
 
 ##### Preprocessing
 The script automatically performs: Resizing and Z-normalization. For large datasets, preprocessing can be skipped to save time and resources by storing already processed images.  
@@ -49,9 +49,9 @@ The script automatically performs: Resizing and Z-normalization. For large datas
    ```bash
    python 2_3D_label_generation.py
    ```
-   - This will generate `.npz` files for each sample, containing:  
-     - **Unsupervised segmentation** (`key: Unsupervised_seg`)  
-     - **AI-assisted label** (`key: AI_Label`)  
+   - This will generate `.npz` files for each sample in the folder Generated_Labels, containing:  
+     - Unsupervised segmentation (`key: Unsupervised_seg`)  
+     - AI-assisted label (`key: AI_Label`)  
 
 ### Citing  
 If you use this repository in your work, please consider citing:  
