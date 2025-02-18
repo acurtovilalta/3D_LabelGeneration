@@ -1,0 +1,7 @@
+torch
+torchvision
+numpy
+torchio
+opencv-python
+pyyaml
+pandas

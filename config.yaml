@@ -4,11 +4,13 @@ device: 1
 path_to_excel: "/home/annac/Documents/3D Bone Tumor Segmentation/Tables/modality_data_split801010.xlsx"
 modality_1: "T1_FS_KM"
 modality_2: "T2"
+modality_1_label: T1_label
+modality_2_label: T2_label
 
 # Data Processing
-h: 96 #500
-w: 96 #500
-depth: 10 #20
+h: 512
+w: 512
+depth: 32
 
 # Optimization
 batch_size: 4
@@ -17,5 +19,8 @@ input_channels: 1
 nConv: 2
 nChannel: 30
 lr: 0.001
-num_epochs: 1000
+num_epochs: 700
 patience: 10
+
+# Label generation
+lab_generation_split: "VAL"
