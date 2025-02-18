@@ -4,8 +4,8 @@ device: 1
 path_to_excel: "modality_data_split801010.xlsx"
 modality_1: "T1_FS_KM"
 modality_2: "T2"
-modality_1_label: T1_label
-modality_2_label: T2_label
+modality_1_label: "T1_label"
+modality_2_label: "T2_label"
 
 # Data Processing
 h: 512
