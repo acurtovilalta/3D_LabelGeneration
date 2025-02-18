@@ -1,7 +1,7 @@
 device: 1
 
 # Dataset
-path_to_excel: "/home/annac/Documents/3D Bone Tumor Segmentation/Tables/modality_data_split801010.xlsx"
+path_to_excel: "modality_data_split801010.xlsx"
 modality_1: "T1_FS_KM"
 modality_2: "T2"
 modality_1_label: T1_label
